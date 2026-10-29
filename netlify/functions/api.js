@@ -8,6 +8,11 @@ export const handler = async (event, context) => {
   // Allow AWS Lambda / Netlify to freeze the process without waiting for MongoDB connection pool timers
   context.callbackWaitsForEmptyEventLoop = false;
 
+  // Fast health check bypass to verify serverless function status
+  if (event.path && (event.path.endsWith('/health') || event.path.endsWith('/health/'))) {
+    return await serverlessHandler(event, context);
+  }
+
   try {
     // Establish or reuse cached Mongoose connection
     await connectDB();

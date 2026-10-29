@@ -1,5 +1,4 @@
 import path from 'path';
-import { fileURLToPath } from 'url';
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -17,8 +16,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 // Load environment variables
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const publicPath = path.resolve('public');
 
 const app = express();
 
@@ -61,7 +59,6 @@ app.use('/.netlify/functions/api/api', apiRouter);
 app.use(apiRouter);
 
 // Serve public static frontend assets in standalone mode
-const publicPath = path.join(__dirname, 'public');
 app.use(express.static(publicPath));
 
 // API 404 handler
