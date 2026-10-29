@@ -13,7 +13,7 @@ const ensureInitialAdmin = async () => {
     const adminEmail = (process.env.INITIAL_ADMIN_EMAIL || 'admin@campusfind.edu').toLowerCase().trim();
     const existing = await User.findOne({ email: adminEmail });
     if (!existing) {
-      const password = process.env.INITIAL_ADMIN_PASSWORD || 'AdminPass123!';
+      const password = process.env.INITIAL_ADMIN_PASSWORD || 'DevAdminPass123';
       const passwordHash = await User.hashPassword(password);
       await User.create({
         name: process.env.INITIAL_ADMIN_NAME || 'Campus Administrator',

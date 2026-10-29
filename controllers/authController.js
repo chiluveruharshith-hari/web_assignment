@@ -5,7 +5,7 @@ import { validateRegisterInput, isValidEmail } from '../utils/validators.js';
 const generateToken = (userId, role) => {
   return jwt.sign(
     { id: userId, role },
-    process.env.JWT_SECRET || 'campusfind_college_portal_secret_key_2025_academic',
+    process.env.JWT_SECRET || 'dev_jwt_secret_dev_only',
     { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
   );
 };

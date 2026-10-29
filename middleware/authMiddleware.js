@@ -19,7 +19,7 @@ export const protect = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'campusfind_college_portal_secret_key_2025_academic');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'dev_jwt_secret_dev_only');
     const user = await User.findById(decoded.id).select('-passwordHash');
 
     if (!user) {
@@ -53,7 +53,7 @@ export const optionalAuth = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'campusfind_college_portal_secret_key_2025_academic');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'dev_jwt_secret_dev_only');
     const user = await User.findById(decoded.id).select('-passwordHash');
     if (user) {
       req.user = user;

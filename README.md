@@ -203,11 +203,11 @@ Copy `.env.example` to `.env` (a ready-to-run `.env` is already configured in th
 PORT=5000
 NODE_ENV=development
 MONGODB_URI=mongodb://127.0.0.1:27017/campusfind
-JWT_SECRET=campusfind_college_portal_secret_key_2025_academic
+JWT_SECRET=<your_secure_jwt_secret>
 JWT_EXPIRES_IN=7d
 INITIAL_ADMIN_NAME="Campus Administrator"
 INITIAL_ADMIN_EMAIL=admin@campusfind.edu
-INITIAL_ADMIN_PASSWORD=AdminPass123!
+INITIAL_ADMIN_PASSWORD=<your_admin_password>
 ```
 
 > **Zero-Configuration MongoDB Support:** If a local standalone MongoDB service is not running on port 27017, the application automatically boots an embedded **in-memory MongoDB server** (`mongodb-memory-server`) during development, enabling full testing and viva demonstrations without installing external database software.
@@ -234,7 +234,7 @@ For academic grading and live viva demonstrations, quick-fill buttons are provid
 
 | Role | Email | Password | Access Capabilities |
 |---|---|---|---|
-| **Administrator** | `admin@campusfind.edu` | `AdminPass123!` | Access Admin Dashboard, review claims, approve/reject claims, delete reports, update item statuses. |
+| **Administrator** | `admin@campusfind.edu` | *(Set via INITIAL_ADMIN_PASSWORD)* | Access Admin Dashboard, review claims, approve/reject claims, delete reports, update item statuses. |
 | **Student** | `alex.student@campusfind.edu` | `StudentPass123!` | Report lost items, report found items, submit ownership claims, view claim history. |
 
 ---
@@ -288,11 +288,11 @@ Because Netlify serverless functions run ephemerally in the cloud, you need a fr
 4. Under **Site configuration** > **Environment variables**, add:
    * `NODE_ENV` = `production`
    * `MONGODB_URI` = *(Your MongoDB Atlas connection string from above)*
-   * `JWT_SECRET` = *(Any secure random string, e.g. `campusfind_prod_secret_2025`)*
+   * `JWT_SECRET` = *(Generate any secure random string)*
    * `JWT_EXPIRES_IN` = `7d`
    * `INITIAL_ADMIN_NAME` = `Campus Administrator`
    * `INITIAL_ADMIN_EMAIL` = `admin@campusfind.edu`
-   * `INITIAL_ADMIN_PASSWORD` = `AdminPass123!`
+   * `INITIAL_ADMIN_PASSWORD` = *(Your chosen secure admin password)*
 5. Click **Deploy Site**. Netlify will build the function, publish the frontend, and give you a live URL (`https://your-app.netlify.app`).
 
 ### Method 2: Deploy via Netlify CLI

@@ -105,7 +105,7 @@ export const seedDatabase = async () => {
     let admin = await User.findOne({ email: adminEmail });
 
     if (!admin) {
-      const password = process.env.INITIAL_ADMIN_PASSWORD || 'AdminPass123!';
+      const password = process.env.INITIAL_ADMIN_PASSWORD || 'DevAdminPass123';
       const passwordHash = await User.hashPassword(password);
       admin = await User.create({
         name: process.env.INITIAL_ADMIN_NAME || 'Campus Administrator',
@@ -155,7 +155,7 @@ export const seedDatabase = async () => {
 
     console.log('\n[Seed] Complete! Default Credentials:');
     console.log('----------------------------------------------------');
-    console.log(`Admin User:   ${adminEmail}  /  Password: ${process.env.INITIAL_ADMIN_PASSWORD || 'AdminPass123!'}`);
+    console.log(`Admin User:   ${adminEmail}  /  Password: ${process.env.INITIAL_ADMIN_PASSWORD || 'DevAdminPass123'}`);
     console.log(`Student User: alex.student@campusfind.edu  /  Password: StudentPass123!`);
     console.log('----------------------------------------------------');
 

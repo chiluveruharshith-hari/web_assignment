@@ -120,7 +120,7 @@ function setupQuickFillDemoButtons() {
       const passInput = document.getElementById('password');
       if (emailInput && passInput) {
         emailInput.value = 'admin@campusfind.edu';
-        passInput.value = 'AdminPass123!';
+        passInput.value = 'DevAdminPass123';
         showToast('Demo Auto-Fill', 'Filled default Administrator credentials.', 'info', 2000);
       }
     });
