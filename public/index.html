@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CampusFind is the official college portal for reporting lost and found belongings across campus.">
+  <title>CampusFind — College Lost &amp; Found Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/forms.css">
+</head>
+<body>
+
+  <!-- Site Header & Navigation -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html" class="brand" id="brand-link">
+        <div class="brand-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+        <span>CampusFind</span>
+        <span class="brand-tag">PORTAL</span>
+      </a>
+
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <nav class="main-nav" id="main-navigation">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="lost-items.html" class="nav-link">Lost Items</a></li>
+          <li><a href="found-items.html" class="nav-link">Found Items</a></li>
+          <li><a href="report.html" class="nav-link">Report an Item</a></li>
+          <li><a href="lab-demo.html" class="nav-link" style="color: #60A5FA;">Lab Syllabus Demo</a></li>
+        </ul>
+        <div class="nav-auth" id="nav-auth">
+          <!-- Populated dynamically by main.js via /api/auth/me -->
+          <a href="login.html" class="nav-link">Login</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Hero Section -->
+    <section class="card" style="margin-bottom: 2rem; padding: 2.25rem 2rem; background: linear-gradient(180deg, #FFFFFF 0%, #F9FAFB 100%);">
+      <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: center;" class="hero-layout">
+        <div>
+          <span style="display: inline-block; font-size: 0.8rem; font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+            Official College Utility
+          </span>
+          <h1 style="font-size: 2.25rem; margin-bottom: 0.85rem; color: var(--color-primary-dark);">
+            Lost something? Let's bring it home.
+          </h1>
+          <p style="font-size: 1.05rem; color: var(--color-text-secondary); max-width: 580px; margin-bottom: 1.5rem; line-height: 1.6;">
+            Report lost belongings, share items you've found, and help reunite people with their possessions across campus.
+          </p>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="report.html?type=lost" class="btn btn-primary btn-lg" id="hero-btn-report-lost">Report a Lost Item</a>
+            <a href="report.html?type=found" class="btn btn-secondary btn-lg" id="hero-btn-report-found">Report a Found Item</a>
+          </div>
+        </div>
+
+        <!-- Dynamic Statistics Counters -->
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.5rem; box-shadow: var(--shadow-sm);">
+          <h3 style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;">
+            Campus Activity Summary
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; text-align: center;">
+            <div>
+              <div id="stat-total" style="font-size: 1.75rem; font-weight: 700; color: var(--color-primary-dark);">--</div>
+              <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Total Reports</div>
+            </div>
+            <div>
+              <div id="stat-open" style="font-size: 1.75rem; font-weight: 700; color: var(--color-accent);">--</div>
+              <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Open Cases</div>
+            </div>
+            <div>
+              <div id="stat-returned" style="font-size: 1.75rem; font-weight: 700; color: var(--color-success);">--</div>
+              <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Reunited</div>
+            </div>
+          </div>
+          <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--color-text-secondary); text-align: center;">
+            Live statistics computed directly from campus database records.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="filter-toolbar" style="margin-bottom: 2rem;">
+      <form id="home-search-form" onsubmit="event.preventDefault(); applyHomeSearch();">
+        <div class="filter-grid">
+          <div class="search-input-wrap">
+            <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input type="text" id="search-input" class="form-control" placeholder="Search item name, description, or keyword..." aria-label="Search items">
+            <span class="kbd-hint search-shortcut-kbd">/</span>
+          </div>
+
+          <div>
+            <select id="search-category" class="form-select" aria-label="Filter by category">
+              <option value="">All Categories</option>
+              <option value="Electronics">Electronics</option>
+              <option value="ID Cards">ID Cards</option>
+              <option value="Books and Stationery">Books and Stationery</option>
+              <option value="Bags and Wallets">Bags and Wallets</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Keys">Keys</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <input type="text" id="search-location" class="form-control" placeholder="Location (e.g. Library)" aria-label="Filter by location">
+          </div>
+
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="submit" class="btn btn-primary" id="btn-search">Search</button>
+            <button type="button" class="btn btn-secondary" id="btn-clear-filters" onclick="clearHomeSearch()">Clear</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Recent Reports Section -->
+    <section>
+      <div class="page-header" style="margin-bottom: 1.25rem;">
+        <div class="page-title-group">
+          <h2>Recent Campus Reports</h2>
+          <p class="text-muted" id="items-count">Loading latest reports...</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <a href="lost-items.html" class="btn btn-secondary btn-sm">View All Lost Items</a>
+          <a href="found-items.html" class="btn btn-secondary btn-sm">View All Found Items</a>
+        </div>
+      </div>
+
+      <div id="recent-items-container">
+        <!-- Rendered via items.js /api/items -->
+        <div class="spinner-container">
+          <div class="spinner"></div>
+          <p>Connecting to database...</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h4>CampusFind</h4>
+        <p>A centralized lost and found portal created for the university community. Report belongings, submit claims, and assist fellow students.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <ul class="footer-links">
+          <li><a href="lost-items.html">Lost Belongings</a></li>
+          <li><a href="found-items.html">Found Belongings</a></li>
+          <li><a href="report.html">Submit Report</a></li>
+          <li><a href="lab-demo.html">Web Programming Lab</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Campus Assistance</h5>
+        <ul class="footer-links">
+          <li><a href="item-details.html?id=demo">How Claims Work</a></li>
+          <li><a href="help-embed.html">Security Office Desk</a></li>
+          <li><a href="login.html">Administrator Login</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2025-2026 CampusFind Academic Project &bull; Built with Node.js, Express, MongoDB &amp; Vanilla JavaScript.</div>
+      <div>Designed for Web Programming Laboratory Viva.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+  <script type="module">
+    import { api } from './js/api.js';
+    import { fetchAndRenderItems } from './js/items.js';
+
+    window.applyHomeSearch = () => {
+      const search = document.getElementById('search-input')?.value.trim();
+      const category = document.getElementById('search-category')?.value;
+      const location = document.getElementById('search-location')?.value.trim();
+      fetchAndRenderItems('recent-items-container', { search, category, location, limit: 8 });
+    };
+
+    window.clearHomeSearch = () => {
+      document.getElementById('search-input').value = '';
+      document.getElementById('search-category').value = '';
+      document.getElementById('search-location').value = '';
+      fetchAndRenderItems('recent-items-container', { limit: 8 });
+    };
+
+    // Load DB stats
+    async function loadStats() {
+      try {
+        const res = await api.get('/stats');
+        if (res.success && res.data) {
+          document.getElementById('stat-total').textContent = res.data.totalReports;
+          document.getElementById('stat-open').textContent = res.data.openReports;
+          document.getElementById('stat-returned').textContent = res.data.returnedItems;
+        }
+      } catch (err) {
+        console.warn('Could not load stats:', err.message);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStats();
+      fetchAndRenderItems('recent-items-container', { limit: 8 });
+    });
+  </script>
+</body>
+</html>

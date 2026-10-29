@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse lost items reported by students and faculty on campus.">
+  <title>Lost Items Directory — CampusFind</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/forms.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <span>CampusFind</span>
+        <span class="brand-tag">PORTAL</span>
+      </a>
+
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="lost-items.html" class="nav-link active">Lost Items</a></li>
+          <li><a href="found-items.html" class="nav-link">Found Items</a></li>
+          <li><a href="report.html" class="nav-link">Report an Item</a></li>
+          <li><a href="lab-demo.html" class="nav-link" style="color: #60A5FA;">Lab Syllabus Demo</a></li>
+        </ul>
+        <div class="nav-auth" id="nav-auth"></div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div class="page-title-group">
+        <h1>Lost Belongings Directory</h1>
+        <p class="text-muted" id="items-count">Search and filter active reports for belongings lost on campus.</p>
+      </div>
+      <div>
+        <a href="report.html?type=lost" class="btn btn-primary" id="btn-report-lost-cta">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Report a Lost Item
+        </a>
+      </div>
+    </div>
+
+    <!-- Filters Bar -->
+    <section class="filter-toolbar">
+      <form id="lost-filter-form" onsubmit="event.preventDefault(); applyFilters();">
+        <div class="filter-grid" style="grid-template-columns: 2fr 1fr 1fr 1fr auto;">
+          <div class="search-input-wrap">
+            <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="search-input" class="form-control" placeholder="Search lost items...">
+            <span class="kbd-hint search-shortcut-kbd">/</span>
+          </div>
+
+          <div>
+            <select id="filter-category" class="form-select" onchange="applyFilters()">
+              <option value="">All Categories</option>
+              <option value="Electronics">Electronics</option>
+              <option value="ID Cards">ID Cards</option>
+              <option value="Books and Stationery">Books and Stationery</option>
+              <option value="Bags and Wallets">Bags and Wallets</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Keys">Keys</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <input type="text" id="filter-location" class="form-control" placeholder="Location..." onchange="applyFilters()">
+          </div>
+
+          <div>
+            <select id="filter-sort" class="form-select" onchange="applyFilters()">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="incidentDate">Incident Date</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <button type="button" class="btn btn-secondary" onclick="resetFilters()">Reset</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Items Grid Container -->
+    <div id="lost-items-grid"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h4>CampusFind</h4>
+        <p>A centralized lost and found portal created for the university community.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Directories</h5>
+        <ul class="footer-links">
+          <li><a href="lost-items.html">Lost Belongings</a></li>
+          <li><a href="found-items.html">Found Belongings</a></li>
+          <li><a href="report.html">Report Item</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Assistance</h5>
+        <ul class="footer-links">
+          <li><a href="lab-demo.html">Syllabus Demo</a></li>
+          <li><a href="help-embed.html">Campus Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2025-2026 CampusFind Academic Project.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+  <script type="module">
+    import { fetchAndRenderItems } from './js/items.js';
+
+    window.applyFilters = () => {
+      const search = document.getElementById('search-input')?.value.trim();
+      const category = document.getElementById('filter-category')?.value;
+      const location = document.getElementById('filter-location')?.value.trim();
+      const sort = document.getElementById('filter-sort')?.value;
+
+      fetchAndRenderItems('lost-items-grid', {
+        type: 'lost',
+        search,
+        category,
+        location,
+        sort
+      });
+    };
+
+    window.resetFilters = () => {
+      document.getElementById('search-input').value = '';
+      document.getElementById('filter-category').value = '';
+      document.getElementById('filter-location').value = '';
+      document.getElementById('filter-sort').value = 'newest';
+      fetchAndRenderItems('lost-items-grid', { type: 'lost' });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const catParam = urlParams.get('category');
+      if (catParam) {
+        const catSelect = document.getElementById('filter-category');
+        if (catSelect) catSelect.value = catParam;
+      }
+      applyFilters();
+    });
+  </script>
+</body>
+</html>

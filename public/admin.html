@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CampusFind Administration Portal - Review reports and ownership claims.">
+  <title>Admin Dashboard — CampusFind</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <span>CampusFind</span>
+        <span class="brand-tag" style="background-color: #B7791F;">ADMIN</span>
+      </a>
+
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="lost-items.html" class="nav-link">Lost Items</a></li>
+          <li><a href="found-items.html" class="nav-link">Found Items</a></li>
+          <li><a href="report.html" class="nav-link">Report an Item</a></li>
+          <li><a href="admin.html" class="nav-link active">Admin Portal</a></li>
+          <li><a href="lab-demo.html" class="nav-link" style="color: #60A5FA;">Lab Demo</a></li>
+        </ul>
+        <div class="nav-auth" id="nav-auth"></div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div class="page-title-group">
+        <h1>Administrative Oversight Dashboard</h1>
+        <p class="text-muted">Manage campus incident reports, evaluate property ownership claims, and log item handovers.</p>
+      </div>
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="btn btn-secondary btn-sm" onclick="window.location.reload()">
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          Refresh Data
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Database Metrics -->
+    <section class="admin-stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Total Reports</span>
+        <span class="stat-value" id="stat-total">--</span>
+        <span class="stat-subtext">All historical logs</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Lost Reports</span>
+        <span class="stat-value" id="stat-lost" style="color: var(--color-danger);">--</span>
+        <span class="stat-subtext">Reported by students</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Found Belongings</span>
+        <span class="stat-value" id="stat-found" style="color: var(--color-success);">--</span>
+        <span class="stat-subtext">Turned in to desks</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Open Cases</span>
+        <span class="stat-value" id="stat-open" style="color: var(--color-accent);">--</span>
+        <span class="stat-subtext">Currently unresolved</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Pending Claims</span>
+        <span class="stat-value" id="stat-claims" style="color: var(--color-warning);">--</span>
+        <span class="stat-subtext">Requiring admin verification</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Items Returned</span>
+        <span class="stat-value" id="stat-returned" style="color: var(--color-success);">--</span>
+        <span class="stat-subtext">Successfully reunited</span>
+      </div>
+    </section>
+
+    <!-- Administration Tabs Navigation -->
+    <div class="admin-tabs">
+      <button class="admin-tab-btn active" data-target="panel-reports">
+        Report Management
+      </button>
+      <button class="admin-tab-btn" data-target="panel-claims">
+        Ownership Claims
+        <span class="tab-badge" id="pending-claims-badge" style="display: none;">0</span>
+      </button>
+    </div>
+
+    <!-- TAB PANEL 1: Reports Management -->
+    <div class="tab-panel active" id="panel-reports">
+      <!-- Search & Filters Toolbar -->
+      <section class="filter-toolbar" style="margin-bottom: 1.25rem;">
+        <div class="filter-grid" style="grid-template-columns: 2fr 1fr 1fr auto;">
+          <div class="search-input-wrap">
+            <input type="text" id="admin-item-search" class="form-control" placeholder="Filter by item title, location, or reporter...">
+          </div>
+          <div>
+            <select id="admin-item-type" class="form-select">
+              <option value="">All Types</option>
+              <option value="lost">Lost Reports</option>
+              <option value="found">Found Reports</option>
+            </select>
+          </div>
+          <div>
+            <select id="admin-item-status" class="form-select">
+              <option value="">All Statuses</option>
+              <option value="open">Open</option>
+              <option value="claimed">Claimed</option>
+              <option value="returned">Returned</option>
+            </select>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary" onclick="import('./js/admin.js').then(m => m.loadAdminItems())">Apply</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Data Table -->
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Item Name &amp; Details</th>
+              <th>Type</th>
+              <th>Category</th>
+              <th>Campus Location</th>
+              <th>Date Logged</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-items-tbody">
+            <!-- Populated dynamically by admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB PANEL 2: Ownership Claims Review -->
+    <div class="tab-panel" id="panel-claims">
+      <div id="admin-claims-container">
+        <!-- Injected dynamically by admin.js -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Claim Decision Confirmation Modal -->
+  <div class="modal-overlay" id="review-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-review-title">Review Ownership Claim</h3>
+        <button type="button" class="toast-close" onclick="document.getElementById('review-modal').classList.remove('active')" style="font-size: 1.25rem;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="modal-review-text" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;"></p>
+        <div class="form-group">
+          <label for="modal-review-notes" class="form-label">Administrative Decision Notes</label>
+          <textarea id="modal-review-notes" class="form-textarea" rows="3" placeholder="Enter reason for approval or rejection (e.g. Student provided matching student ID number or serial number)..."></textarea>
+          <span class="form-hint">Recorded into audit trail and visible to the claimant.</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btn-modal-cancel">Cancel</button>
+        <button type="button" class="btn btn-primary" id="btn-modal-confirm">Confirm Decision</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h4>CampusFind</h4>
+        <p>A centralized lost and found portal created for the university community.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Directories</h5>
+        <ul class="footer-links">
+          <li><a href="lost-items.html">Lost Belongings</a></li>
+          <li><a href="found-items.html">Found Belongings</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Assistance</h5>
+        <ul class="footer-links">
+          <li><a href="lab-demo.html">Syllabus Demo</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2025-2026 CampusFind Academic Project &bull; Authorized Administrative Access.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>

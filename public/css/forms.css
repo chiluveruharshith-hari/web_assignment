@@ -1,0 +1,250 @@
+/* ==========================================================================
+   CampusFind - Forms & Inputs Stylesheet
+   Clean form layouts, accessible focus states, validation indicators.
+   ========================================================================== */
+
+/* Form Container & Structure */
+.form-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1.75rem;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.form-grid-full {
+  grid-column: 1 / -1;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1.15rem;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-label .required-indicator {
+  color: var(--color-danger);
+  margin-left: 0.2rem;
+}
+
+.form-control,
+.form-select,
+.form-textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.55rem 0.75rem;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(49, 94, 158, 0.15);
+}
+
+.form-control::placeholder,
+.form-textarea::placeholder {
+  color: #9AA5B1;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Radio Cards (for Report Type: Lost vs Found) */
+.radio-cards-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.radio-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background-color: var(--color-surface);
+  transition: var(--transition);
+}
+
+.radio-card:hover {
+  background-color: var(--color-surface-subtle);
+}
+
+.radio-card input[type="radio"] {
+  accent-color: var(--color-accent);
+  width: 18px;
+  height: 18px;
+}
+
+.radio-card-content strong {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--color-primary-dark);
+}
+
+.radio-card-content span {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.radio-card:has(input[type="radio"]:checked) {
+  border-color: var(--color-accent);
+  background-color: #F0F4FA;
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+/* Form Hints & Validation Messages */
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.form-error {
+  font-size: 0.75rem;
+  color: var(--color-danger);
+  font-weight: 500;
+  display: none;
+}
+
+.form-group.has-error .form-control,
+.form-group.has-error .form-select,
+.form-group.has-error .form-textarea {
+  border-color: var(--color-danger);
+  background-color: #FFF9F9;
+}
+
+.form-group.has-error .form-error {
+  display: block;
+}
+
+.char-counter {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  text-align: right;
+  margin-top: 0.15rem;
+}
+
+/* Live Image Preview */
+.image-preview-wrap {
+  margin-top: 0.5rem;
+  width: 100%;
+  max-width: 240px;
+  height: 140px;
+  border: 1px dashed var(--color-border-dark);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.image-preview-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-preview-wrap.hidden {
+  display: none;
+}
+
+/* Search and Filter Toolbar */
+.filter-toolbar {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.5rem;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.search-input-wrap .form-control {
+  padding-left: 2.25rem;
+  padding-right: 3rem;
+}
+
+.search-shortcut-kbd {
+  position: absolute;
+  right: 0.6rem;
+  pointer-events: none;
+}
+
+/* Action button bar */
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Responsive Forms */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .radio-cards-group {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+}

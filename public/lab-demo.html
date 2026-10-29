@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive demonstrations of Web Programming syllabus concepts: HTML5, CSS3, JavaScript, Callbacks, Closures, DOM, and Node.js.">
+  <title>Web Programming Syllabus Demonstrations — CampusFind</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/forms.css">
+
+  <!-- Internal CSS Demonstration (Syllabus concept: Internal vs External CSS) -->
+  <style>
+    /* Demonstration of Internal CSS stylesheet */
+    .lab-internal-css-demo {
+      background-color: #EBF8FF;
+      border: 1px dashed #3182CE;
+      padding: 0.85rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #2B6CB0;
+    }
+    .highlight-test {
+      outline: 3px solid #E53E3E !important;
+      background-color: #FED7D7 !important;
+      transition: all 0.2s ease;
+    }
+    .log-console {
+      background-color: #1A202C;
+      color: #E2E8F0;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding: 0.85rem;
+      border-radius: 4px;
+      height: 180px;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+    .log-entry.log-success { color: #68D391; }
+    .log-entry.log-error { color: #FC8181; }
+    .log-entry.log-warning { color: #F6AD55; }
+    .log-entry.log-info { color: #63B3ED; }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <span>CampusFind</span>
+        <span class="brand-tag">LAB VIVA</span>
+      </a>
+
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="lost-items.html" class="nav-link">Lost Items</a></li>
+          <li><a href="found-items.html" class="nav-link">Found Items</a></li>
+          <li><a href="report.html" class="nav-link">Report an Item</a></li>
+          <li><a href="lab-demo.html" class="nav-link active">Lab Syllabus Demo</a></li>
+        </ul>
+        <div class="nav-auth" id="nav-auth"></div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div class="page-title-group">
+        <h1>Web Programming Concepts Lab</h1>
+        <p class="text-muted">Interactive educational demonstrations of HTML5, CSS3, JavaScript asynchronous patterns, closures, safe DOM manipulation, and Node.js Event Loop.</p>
+      </div>
+    </div>
+
+    <!-- Quick Navigation Index -->
+    <nav class="card" style="margin-bottom: 2rem; background: #FFFFFF;" aria-label="Lab sections navigation">
+      <h3 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Syllabus Topic Index</h3>
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <a href="#section-async" class="btn btn-secondary btn-sm">1. Callbacks &amp; Async/Await</a>
+        <a href="#section-closures" class="btn btn-secondary btn-sm">2. Closures &amp; Scope</a>
+        <a href="#section-dom-safety" class="btn btn-secondary btn-sm">3. Safe DOM vs XSS</a>
+        <a href="#section-events" class="btn btn-secondary btn-sm">4. Keyboard &amp; Events</a>
+        <a href="#section-event-loop" class="btn btn-secondary btn-sm">5. Node.js Event Loop</a>
+        <a href="#section-html-css" class="btn btn-secondary btn-sm">6. HTML5 &amp; CSS Selectors</a>
+        <a href="#section-iframe" class="btn btn-secondary btn-sm">7. iframe &amp; Sandbox</a>
+      </div>
+    </nav>
+
+    <!-- SECTION 1: ASYNCHRONOUS JAVASCRIPT: Callbacks vs Promises vs Async/Await -->
+    <section id="section-async" class="card" style="margin-bottom: 2rem;">
+      <h2>1. Asynchronous JavaScript: Callbacks, Callback Hell &amp; Async/Await</h2>
+      <p class="text-muted">
+        In early JavaScript, asynchronous operations relied on nested callback functions. When multiple dependent async tasks are sequenced, it leads to the infamous <em>"Pyramid of Doom"</em> (Callback Hell). Modern JavaScript solves this using Promises and the <code>async/await</code> syntax.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1rem;">
+        <div>
+          <h4>Execute Async Demonstrations:</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" id="btn-run-callback-hell" style="justify-content: flex-start;">
+              &bull; Run Nested Callback Demo (Callback Hell)
+            </button>
+            <button class="btn btn-secondary btn-sm" id="btn-run-promise" style="justify-content: flex-start;">
+              &bull; Run Promise Chain (.then / .catch)
+            </button>
+            <button class="btn btn-primary btn-sm" id="btn-run-async" style="justify-content: flex-start;">
+              &bull; Run Modern Async / Await Execution
+            </button>
+            <button class="btn btn-secondary btn-sm" id="btn-clear-async-log" style="justify-content: flex-start; color: var(--color-danger);">
+              Clear Log Console
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <h4>Execution Log Console:</h4>
+          <div class="log-console" id="async-log-console">
+            <div class="log-entry text-muted">Ready. Click a button above to observe step-by-step execution.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: CLOSURES AND SCOPE -->
+    <section id="section-closures" class="card" style="margin-bottom: 2rem;">
+      <h2>2. Closures &amp; Lexical Scope</h2>
+      <p class="text-muted">
+        A <strong>closure</strong> is a function bundled together with references to its surrounding lexical state. Closures give functions access to an outer function's scope even after the outer function has finished executing, enabling private variables and data encapsulation.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1rem;">
+        <div class="card" style="background: #FAFAFA;">
+          <h4>Independent Counter A (Private count initialized to 0)</h4>
+          <div style="font-size: 2rem; font-weight: 700; color: var(--color-primary-dark); margin: 0.5rem 0;" id="counter-a-val">0</div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" id="btn-counter-a-inc">+ Increment A</button>
+            <button class="btn btn-secondary btn-sm" id="btn-counter-a-dec">- Decrement A</button>
+          </div>
+          <span class="text-muted" style="font-size: 0.75rem; display: block; margin-top: 0.5rem;">Encapsulated within Counter A's private lexical scope.</span>
+        </div>
+
+        <div class="card" style="background: #FAFAFA;">
+          <h4>Independent Counter B (Private count initialized to 100)</h4>
+          <div style="font-size: 2rem; font-weight: 700; color: var(--color-accent); margin: 0.5rem 0;" id="counter-b-val">100</div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" id="btn-counter-b-inc">+ Increment B</button>
+            <button class="btn btn-secondary btn-sm" id="btn-counter-b-dec">- Decrement B</button>
+          </div>
+          <span class="text-muted" style="font-size: 0.75rem; display: block; margin-top: 0.5rem;">Counter B maintains its own isolated private state without collision.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: SAFE DOM MANIPULATION & XSS PREVENTION -->
+    <section id="section-dom-safety" class="card" style="margin-bottom: 2rem;">
+      <h2>3. DOM Manipulation &amp; Cross-Site Scripting (XSS) Prevention</h2>
+      <p class="text-muted">
+        Inserting untrusted user input directly using <code>element.innerHTML</code> creates serious Cross-Site Scripting (XSS) vulnerabilities. Safe DOM manipulation relies on <code>element.textContent</code>, <code>document.createElement()</code>, or proper escaping.
+      </p>
+
+      <div style="margin-top: 1rem;">
+        <div class="form-group">
+          <label for="xss-input" class="form-label">Test Input with Simulated Script / HTML Payload:</label>
+          <input type="text" id="xss-input" class="form-control" value="&lt;img src=x onerror=alert('Simulated-XSS-Execution')&gt; &lt;b&gt;Formatted Bold Tag&lt;/b&gt;">
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; margin-bottom: 1rem;">
+          <button class="btn btn-danger btn-sm" id="btn-render-unsafe">Render Unsafely via innerHTML</button>
+          <button class="btn btn-primary btn-sm" id="btn-render-safe">Render Safely via textContent / createElement</button>
+        </div>
+
+        <div id="dom-render-output"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: KEYBOARD & EVENT LISTENERS -->
+    <section id="section-events" class="card" style="margin-bottom: 2rem;">
+      <h2>4. Keyboard, Mouse, and Window Event Listeners</h2>
+      <p class="text-muted">
+        Standard DOM Level 2 event listener model (<code>addEventListener()</code>) with event object inspection.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1rem;">
+        <div>
+          <label for="keyboard-test-input" class="form-label">Type in this box to inspect real-time KeyboardEvents:</label>
+          <input type="text" id="keyboard-test-input" class="form-control" placeholder="Press any key (Shift, Ctrl, Alt, Letters, Numbers)...">
+          <div id="keyboard-event-display" class="card" style="margin-top: 0.75rem; font-family: var(--font-mono); font-size: 0.8rem; background: #F8F9FA;">
+            Press a key to inspect event payload.
+          </div>
+        </div>
+
+        <div class="card" style="background: #FAFAFA;">
+          <h4>Global Keyboard Shortcut</h4>
+          <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin-bottom: 0.5rem;">
+            On any page across the portal, pressing the <span class="kbd-hint">/</span> key instantly focuses the main search bar without needing to click with the mouse.
+          </p>
+          <span class="badge-status-returned" style="font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 3px;">Active Portal-Wide Feature</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: NODE.JS EVENT LOOP SIMULATOR -->
+    <section id="section-event-loop" class="card" style="margin-bottom: 2rem;">
+      <h2>5. Node.js Event Loop Architecture &amp; Non-Blocking I/O</h2>
+      <p class="text-muted">
+        Node.js uses a single-threaded event loop with Libuv to handle thousands of concurrent operations without thread blocking. Timers (<code>setTimeout</code>), Microtasks (<code>Promise.then</code> / <code>process.nextTick</code>), and I/O callbacks run in distinct phases.
+      </p>
+
+      <div style="margin-top: 1rem;">
+        <button class="btn btn-primary btn-sm" id="btn-run-event-loop-sim" style="margin-bottom: 0.75rem;">
+          Run Interactive Event Loop Phase Order Simulation
+        </button>
+        <div id="event-loop-sim-console"></div>
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--color-text-secondary);">
+          <strong>Note:</strong> A standalone backend demonstration script is also included at <code>scripts/event-loop-demo.js</code>. Run <code>npm run demo:event-loop</code> in your terminal to see it directly in Node.js.
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: HTML5 SEMANTIC ELEMENTS & CSS SELECTORS -->
+    <section id="section-html-css" class="card" style="margin-bottom: 2rem;">
+      <h2>6. HTML5 Semantic Elements &amp; CSS Selectors</h2>
+      <p class="text-muted">
+        Demonstration of semantic HTML tags (<code>&lt;article&gt;</code>, <code>&lt;figure&gt;</code>, <code>&lt;mark&gt;</code>, <code>&lt;dl&gt;</code>, <code>&lt;table&gt;</code>) and interactive CSS selector testing.
+      </p>
+
+      <!-- Semantic HTML Table -->
+      <div style="margin-top: 1rem;">
+        <h4>Semantic Data Table with &lt;thead&gt;, &lt;tbody&gt;, and &lt;th&gt;</h4>
+        <div class="table-responsive" style="margin-top: 0.5rem;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Semantic Meaning</th>
+                <th>Accessibility Benefit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>&lt;main&gt;</code></td>
+                <td>Dominant content of the document body</td>
+                <td>Allows screen readers to jump directly to main content</td>
+              </tr>
+              <tr>
+                <td><code>&lt;nav&gt;</code></td>
+                <td>Section containing navigation links</td>
+                <td>Identified as landmark region by assistive tech</td>
+              </tr>
+              <tr>
+                <td><code>&lt;mark&gt;</code></td>
+                <td>Text marked or highlighted for reference</td>
+                <td>Conveys programmatic emphasis to search engines</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Description List -->
+      <div style="margin-top: 1.5rem;">
+        <h4>Semantic Description List (&lt;dl&gt;, &lt;dt&gt;, &lt;dd&gt;)</h4>
+        <dl style="margin-top: 0.5rem; line-height: 1.6; font-size: 0.9rem;">
+          <dt style="font-weight: 700; color: var(--color-primary-dark);">Relational Database (SQL)</dt>
+          <dd style="margin-left: 1rem; color: var(--color-text-secondary); margin-bottom: 0.5rem;">Stores data in structured tabular rows and columns with strict schema foreign keys.</dd>
+          <dt style="font-weight: 700; color: var(--color-primary-dark);">Document Database (MongoDB / NoSQL)</dt>
+          <dd style="margin-left: 1rem; color: var(--color-text-secondary);">Stores flexible JSON-like documents with dynamic fields, arrays, and embedded subdocuments.</dd>
+        </dl>
+      </div>
+
+      <!-- Interactive CSS Selectors Sandbox -->
+      <div style="margin-top: 1.5rem;">
+        <h4>Interactive CSS Selector Inspector</h4>
+        <p class="text-muted" style="font-size: 0.85rem;">Click a selector button below to dynamically highlight matching elements in the sandbox.</p>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem;">
+          <button class="btn btn-secondary btn-sm btn-selector-test" data-selector="p">Element Selector: <code>p</code></button>
+          <button class="btn btn-secondary btn-sm btn-selector-test" data-selector=".demo-badge">Class Selector: <code>.demo-badge</code></button>
+          <button class="btn btn-secondary btn-sm btn-selector-test" data-selector="#special-id-item">ID Selector: <code>#special-id-item</code></button>
+          <button class="btn btn-secondary btn-sm btn-selector-test" data-selector="[data-category='electronics']">Attribute Selector: <code>[data-category='electronics']</code></button>
+        </div>
+        <div id="selector-match-count" style="font-size: 0.8rem; font-weight: 600; color: var(--color-accent); margin-bottom: 0.5rem;"></div>
+
+        <div id="selector-sandbox" class="card" style="background: #FAFAFA; border: 1px dashed var(--color-border-dark);">
+          <p>Standard paragraph element inside the sandbox.</p>
+          <div class="demo-badge" style="display: inline-block; padding: 0.2rem 0.5rem; background: #E2E8F0; border-radius: 3px; font-size: 0.8rem; margin: 0.35rem 0;">Element with class .demo-badge</div>
+          <div id="special-id-item" style="padding: 0.35rem; font-weight: 600;">Element with unique ID #special-id-item</div>
+          <div data-category="electronics" style="padding: 0.35rem; color: var(--color-primary);">Element with custom attribute data-category="electronics"</div>
+        </div>
+      </div>
+
+      <!-- Internal CSS Demonstration -->
+      <div style="margin-top: 1.5rem;">
+        <h4>Demonstration of Internal CSS vs External CSS</h4>
+        <div class="lab-internal-css-demo">
+          This container is styled exclusively via an <strong>Internal CSS &lt;style&gt;</strong> tag placed in the document head, while the primary website styling is loaded via the <strong>External CSS &lt;link rel="stylesheet"&gt;</strong> files.
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: IFRAME DEMONSTRATION -->
+    <section id="section-iframe" class="card" style="margin-bottom: 2rem;">
+      <h2>7. iframe Embedding with Sandbox Security Configuration</h2>
+      <p class="text-muted">
+        Demonstrates the HTML5 <code>&lt;iframe&gt;</code> element embedding local campus documentation (<code>help-embed.html</code>) with explicit accessible <code>title</code> and secure <code>sandbox</code> attributes.
+      </p>
+
+      <div style="margin-top: 1rem;">
+        <iframe
+          src="help-embed.html"
+          title="Campus Security Lost and Found Guidelines Guide"
+          style="width: 100%; height: 260px; border: 1px solid var(--color-border); border-radius: var(--radius-sm);"
+          sandbox="allow-same-origin allow-scripts">
+        </iframe>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h4>CampusFind</h4>
+        <p>A centralized lost and found portal created for the university community.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Directories</h5>
+        <ul class="footer-links">
+          <li><a href="lost-items.html">Lost Belongings</a></li>
+          <li><a href="found-items.html">Found Belongings</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Assistance</h5>
+        <ul class="footer-links">
+          <li><a href="help-embed.html">Security Office</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2025-2026 CampusFind Academic Project &bull; Web Programming Concepts Demonstration.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/lab-demo.js"></script>
+</body>
+</html>
